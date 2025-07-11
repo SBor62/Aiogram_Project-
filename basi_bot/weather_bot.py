@@ -7,6 +7,7 @@ from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 import asyncio
 import requests
+import random
 
 # Настройка логгирования
 logging.basicConfig(level=logging.INFO)
@@ -41,9 +42,24 @@ async def start_command(message: types.Message):
     )
 
 
+@dp.message(Command("photo"))
+async def photo(message: types.Message):
+    list = [
+        'https://cs9.pikabu.ru/post_img/big/2018/03/22/6/1521710988188123266.jpg',
+        'https://i.pinimg.com/736x/8d/a4/8f/8da48feabf62ca030ff36a281c5b41a0.jpg',
+        'https://i.pinimg.com/736x/d2/1a/3c/d21a3c2e9c55b341c091e0bbe1ac9308.jpg',
+        'https://i.pinimg.com/originals/f6/90/60/f69060a84a11f871c12d91818c952d80.jpg',
+        'https://cs.pikabu.ru/post_img/big/2013/07/03/4/1372820730_1017112159.png'
+    ]
+    rand_photo = random.choice(list)
+    await message.answer_photo(photo=rand_photo, caption='Это забавная картинка')
+
+
 @dp.message(Command("help"))
 async def help_command(message: types.Message):
-    await message.answer("Команды:\n/start - Начать\n/help - Помощь\n/weather - Погода в Москве")
+    await message.answer(
+        "Команды:\n/start - Начать\n/help - Помощь\n/weather - Погода в Москве\n/photo - Случайное фото котят"
+    )
 
 
 @dp.message(Command("weather"))
